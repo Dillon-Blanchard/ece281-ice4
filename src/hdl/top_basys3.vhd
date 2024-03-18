@@ -70,21 +70,21 @@ end top_basys3;
 architecture top_basys3_arch of top_basys3 is 
 
 --Declare stoplight component here 
-component stoplight is
-    port( i_Reset : in std_logic;
-          i_clk : in std_logic;
-          i_C : in std_logic;
-          o_R : out std_logic;
-          o_Y : out std_logic;
-          o_G : out std_logic
+component stoplight_fsm is
+    port( i_Reset : in std_logic := '0';
+          i_clk : in std_logic := '0';
+          i_C : in std_logic := '0';
+          o_R : out std_logic := '0';
+          o_Y : out std_logic := '0';
+          o_G : out std_logic := '0'
 );
-end component stoplight;
+end component stoplight_fsm;
 
 component clock_divider is
 	generic ( constant k_DIV : natural := 2	);
-	port ( 	i_clk    : in std_logic;		   -- basys3 clk
-			i_reset  : in std_logic;		   -- asynchronous
-			o_clk    : out std_logic		   -- divided (slow) clock
+	port ( 	i_clk    : in std_logic := '0';		   -- basys3 clk
+			i_reset  : in std_logic := '0';		   -- asynchronous
+			o_clk    : out std_logic := '0'		   -- divided (slow) clock
 	);
 end component clock_divider;
 
@@ -93,7 +93,7 @@ end component clock_divider;
 begin
 	-- PORT MAPS ----------------------------------------
 	--Port map stoplight here based on the design provided
-	stoplight_inst : stoplight
+	stoplight_inst : stoplight_fsm
 	port map(
 	      i_C => sw(0),
 	      i_Reset => btnC,
